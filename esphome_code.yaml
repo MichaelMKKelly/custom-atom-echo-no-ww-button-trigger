@@ -31,11 +31,6 @@ wifi:
 
 captive_portal:
 
-button:
-  - platform: factory_reset
-    id: factory_reset_btn
-    name: Factory reset
-
 i2s_audio:
   - id: i2s_audio_bus
     i2s_lrclk_pin: GPIO33
@@ -158,7 +153,7 @@ voice_assistant:
 binary_sensor:
   # button does the following:
   # short click - stop a timer
-  # if no timer then restart either microwakeword or voice assistant continuous
+  # if no timer then start voice assistant
   - platform: gpio
     pin:
       number: GPIO39
@@ -179,11 +174,6 @@ binary_sensor:
                 - switch.turn_off: timer_ringing
               else:
                 - voice_assistant.start:                    
-#                - script.execute: start_wake_word
-      - timing:
-          - ON for at least 10s
-        then:
-          - button.press: factory_reset_btn
 
 light:
   - platform: esp32_rmt_led_strip
@@ -281,4 +271,3 @@ switch:
           announcement: true
       - delay: 15min
       - switch.turn_off: timer_ringing
-
